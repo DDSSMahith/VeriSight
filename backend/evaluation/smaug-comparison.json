@@ -1,0 +1,77 @@
+{
+  "model_id": "abacusai/Smaug-AI-Image-Detector",
+  "revision": "c7c95951e04a87b884a4ad479401b1128c3903bd",
+  "warning": "Development smoke comparison, including the user-reported AI image. Not an independent benchmark; no threshold fitted.",
+  "rows": [
+    {
+      "file": "user-building.png",
+      "expected_ai": 1,
+      "sha256": "f7f8ff8dbf1d17cee7fa0058401186d3af811fbf59eb4da4ab91bcabc13fa0bc",
+      "scores": {
+        "original": 0.9557326436042786,
+        "jpeg-85": 0.891173779964447,
+        "resize-128": 0.05929332599043846
+      }
+    },
+    {
+      "file": "astronaut.png",
+      "expected_ai": 0,
+      "sha256": "88431cd9653ccd539741b555fb0a46b61558b301d4110412b5bc28b5e3ea6cb5",
+      "scores": {
+        "original": 0.006982381921261549,
+        "jpeg-85": 0.015572349540889263,
+        "resize-128": 0.6607912182807922
+      }
+    },
+    {
+      "file": "camera.png",
+      "expected_ai": 0,
+      "sha256": "b0793d2adda0fa6ae899c03989482bff9a42d3d5690fc7e3648f2795d730c23a",
+      "scores": {
+        "original": 0.0001879599003586918,
+        "jpeg-85": 0.0001777691941242665,
+        "resize-128": 0.5525169968605042
+      }
+    },
+    {
+      "file": "chelsea.png",
+      "expected_ai": 0,
+      "sha256": "596aa1e7cb875eb79f437e310381d26b338a81c2da23439704a73c4651e8c4bb",
+      "scores": {
+        "original": 0.008115115575492382,
+        "jpeg-85": 0.0003545977524481714,
+        "resize-128": 0.9982596039772034
+      }
+    },
+    {
+      "file": "text2img-1.png",
+      "expected_ai": 1,
+      "sha256": "254a5af2dfbf2174b275b069a2b6ec80a6c03099939dba4d1934c9408b829ce7",
+      "scores": {
+        "original": 0.999948263168335,
+        "jpeg-85": 0.9999572038650513,
+        "resize-128": 0.99996018409729
+      }
+    },
+    {
+      "file": "sdxl-text2img.png",
+      "expected_ai": 1,
+      "sha256": "e073c8191b03635372961f219ef5ca3ad7d60b65eb2a71a7dbd1a3a28f86b4fe",
+      "scores": {
+        "original": 0.9999547004699707,
+        "jpeg-85": 0.9999462366104126,
+        "resize-128": 0.9999369382858276
+      }
+    },
+    {
+      "file": "text2img-vader.png",
+      "expected_ai": 1,
+      "sha256": "317a58632171f529ab2d17d1cbc39f7d02a628a7c96906b1564b7609330750cb",
+      "scores": {
+        "original": 0.9999555349349976,
+        "jpeg-85": 0.9999619722366333,
+        "resize-128": 0.9998186230659485
+      }
+    }
+  ]
+}

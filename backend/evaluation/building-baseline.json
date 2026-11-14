@@ -1,0 +1,19 @@
+{
+  "detection": {
+    "status": "complete",
+    "model_id": "Ateeqq/ai-vs-human-image-detector",
+    "revision": "60e82406916921b823616bee33397baab38af3f0",
+    "ai_score": 0.0008566557662561536,
+    "message": "Raw model score, not a verified probability. A stable score can still be wrong.",
+    "calibrated": false,
+    "stability": "consistent",
+    "check_scores": {
+      "original": 0.0008566557662561536,
+      "jpeg-85": 0.0009199409978464246,
+      "resize-128": 0.00233645411208272
+    },
+    "scope": "AI-generated images; not face swaps, video, or audio"
+  },
+  "sha256": "f7f8ff8dbf1d17cee7fa0058401186d3af811fbf59eb4da4ab91bcabc13fa0bc",
+  "label_source": "user reports AI-generated"
+}

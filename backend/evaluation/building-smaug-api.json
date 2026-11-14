@@ -1,0 +1,168 @@
+{
+  "media": {
+    "filename": "image (1).png",
+    "media_kind": "image",
+    "mime_type": "image/png",
+    "size_bytes": 1943861,
+    "sha256": "f7f8ff8dbf1d17cee7fa0058401186d3af811fbf59eb4da4ab91bcabc13fa0bc",
+    "extension": ".png",
+    "dimensions": "1453 \u00d7 719",
+    "format": "PNG",
+    "color_mode": "RGBA",
+    "created_at": null,
+    "software": null
+  },
+  "detection": {
+    "status": "complete",
+    "model_id": "abacusai/Smaug-AI-Image-Detector",
+    "revision": "c7c95951e04a87b884a4ad479401b1128c3903bd",
+    "ai_score": 0.9557326436042786,
+    "message": "Resizing or compression changed the model's result. Use the original score with caution; small copies can lose important detail.",
+    "calibrated": false,
+    "stability": "sensitive",
+    "check_scores": {
+      "original": 0.9557326436042786,
+      "jpeg-85": 0.891173779964447,
+      "resize-128": 0.05929332599043846
+    },
+    "crop_scores": [
+      0.999772846698761,
+      0.01259230449795723,
+      0.9944536089897156
+    ],
+    "method": "Three 528-pixel crops per version; average crop logits, then sigmoid.",
+    "scope": "AI-generated images; not face swaps, video, or audio"
+  },
+  "verdict": "inconclusive",
+  "processing_ms": 76380,
+  "evidence": [
+    {
+      "id": "model-assessment",
+      "title": "An experimental model ran, but cannot verify this image",
+      "description": "The model examined the image\u2019s pixels. Its output has not been calibrated or independently validated for this app, so even a near-zero or near-100 score does not support a real/fake conclusion. File details do not change this output.",
+      "severity": "info",
+      "score": 0.0,
+      "category": "model",
+      "observed": "Raw AI-class output: 0.955733 (0\u20131 scale; not a confidence estimate)"
+    },
+    {
+      "id": "model-crops",
+      "title": "Three parts of the original were checked",
+      "description": "The model checked the start, middle, and end of the image's longer side, using overlapping square crops. Their outputs were combined into the original-image score. These are classification scores, not locations of proven edits.",
+      "severity": "info",
+      "score": 0.0,
+      "category": "model",
+      "observed": "AI-class outputs (0\u2013100, not confidence): 99.98, 1.26, 99.45"
+    },
+    {
+      "id": "model-stability",
+      "title": "Resizing or compression changed the result",
+      "description": "Original: 95.57/100; JPEG copy: 89.12/100; Smaller copy: 5.93/100. The range was 89.64 points. The preferred class changed or the score moved by at least 60 points. The smaller copy is only 128 \u00d7 128 pixels and can lose useful detail. This sensitivity reduces how much we can rely on the result.",
+      "severity": "medium",
+      "score": 0.0,
+      "category": "model",
+      "observed": null
+    },
+    {
+      "id": "model-explanation-limit",
+      "title": "No specific visual defect was established",
+      "description": "This classifier returns a score, not a description or location of an edit. It has not identified mismatched eyes, skin, lighting, or a swapped face. The file checks below are separate observations, not an explanation of the model\u2019s internal decision.",
+      "severity": "info",
+      "score": 0.0,
+      "category": "model",
+      "observed": null
+    },
+    {
+      "id": "face-swap-not-tested",
+      "title": "Face swaps were not tested",
+      "description": "There is no face-manipulation detector in this build. An AI-generation score cannot rule out a swapped or edited face. This remains an untested part of the image.",
+      "severity": "info",
+      "score": 0.0,
+      "category": "model",
+      "observed": null
+    },
+    {
+      "id": "spatial-brightness",
+      "title": "Brightness variation",
+      "description": "Highest measurement: row 1, column 1 (254.78 levels); typical region: 88.58 levels. The regional range is 208.43 levels. Brightness is affected by object colors, shadows, and exposure. This does not estimate light-source direction or establish physically inconsistent lighting.",
+      "severity": "info",
+      "score": 0.0,
+      "category": "visual",
+      "observed": "Regional 90th\u201310th percentile gap: 94.08 levels"
+    },
+    {
+      "id": "spatial-texture",
+      "title": "Texture variation",
+      "description": "Highest measurement: row 4, column 2 (4.67 bits); typical region: 4.09 bits. The regional range is 4.67 bits. Natural materials, hair, text, blur, and noise all change entropy. High or low entropy alone does not indicate synthesis or an edit.",
+      "severity": "info",
+      "score": 0.0,
+      "category": "visual",
+      "observed": "Median regional entropy: 4.09 bits"
+    },
+    {
+      "id": "spatial-detail",
+      "title": "Fine-detail / noise residual",
+      "description": "Highest measurement: row 3, column 3 (16.45 levels RMS); typical region: 11.63 levels RMS. The regional range is 16.13 levels RMS. This mixes texture, edges, sharpening, and noise. It is not a sensor-noise estimate or a camera fingerprint; differences need contextual review.",
+      "severity": "info",
+      "score": 0.0,
+      "category": "visual",
+      "observed": "Median regional residual: 11.63 levels RMS"
+    },
+    {
+      "id": "spatial-compression",
+      "title": "JPEG re-save difference",
+      "description": "Highest measurement: row 2, column 5 (2.88 levels); typical region: 2.23 levels. The regional range is 2.68 levels. Detailed edges and saturated colors often change most. This is a controlled re-save experiment, not proof of a pasted region or a reconstruction of past compression.",
+      "severity": "info",
+      "score": 0.0,
+      "category": "visual",
+      "observed": "Mean regional absolute difference: 2.06 levels"
+    },
+    {
+      "id": "cryptographic-identity",
+      "title": "Evidence identity established",
+      "description": "A SHA-256 digest was calculated so this exact file can be referenced and compared later.",
+      "severity": "info",
+      "score": 0.0,
+      "category": "integrity",
+      "observed": "f7f8ff8dbf1d17cee7fa\u2026"
+    },
+    {
+      "id": "high-entropy",
+      "title": "Near-random byte distribution",
+      "description": "The file has unusually high byte entropy, which may indicate encryption, packing, or a mislabeled container.",
+      "severity": "low",
+      "score": 0.3,
+      "category": "integrity",
+      "observed": "7.979 bits/byte"
+    },
+    {
+      "id": "metadata-absent",
+      "title": "Sparse origin metadata",
+      "description": "No camera or software origin fields were found. Many platforms strip this data, so this is weak evidence.",
+      "severity": "info",
+      "score": 0.12,
+      "category": "metadata",
+      "observed": "No software/date field"
+    },
+    {
+      "id": "provenance-unavailable",
+      "title": "No provenance manifest detected",
+      "description": "No C2PA-style marker was found in the scanned container. Absence is not evidence of manipulation.",
+      "severity": "info",
+      "score": 0.0,
+      "category": "provenance",
+      "observed": "Not present"
+    }
+  ],
+  "limitations": {
+    "neural_detector_available": true,
+    "provenance_manifest_found": false,
+    "notes": [
+      "Resizing or compression changed the model's result. Use the original score with caution; small copies can lose important detail.",
+      "This model checks AI-generated still images, not face swaps or other localized edits.",
+      "Smaug combines three image crops for each score. Scores are uncalibrated; unseen generators, screenshots, and compression may cause errors.",
+      "Our local checks found errors on heavily downsized copies. Resizing agreement is a robustness check, not an accuracy measurement.",
+      "No deployment accuracy has been established. Automatic authenticity verdicts are disabled; raw model output is diagnostic only."
+    ]
+  }
+}

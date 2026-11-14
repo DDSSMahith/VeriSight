@@ -1,0 +1,77 @@
+{
+  "model_id": "TensorFold/detectra-v1",
+  "revision": "2bbc31161daa46932e05ee6f96e7016ee817bbde",
+  "warning": "Development smoke comparison including user-reported AI example, not an independent benchmark. No threshold fitted.",
+  "rows": [
+    {
+      "file": "user-building.png",
+      "expected_ai": 1,
+      "scores": {
+        "original": 0.00025167222452835705,
+        "jpeg-85": 0.0001922143091386352,
+        "resize-128": 0.0030223040857687723
+      },
+      "sha256": "f7f8ff8dbf1d17cee7fa0058401186d3af811fbf59eb4da4ab91bcabc13fa0bc"
+    },
+    {
+      "file": "astronaut.png",
+      "expected_ai": 0,
+      "scores": {
+        "original": 0.09409320573631917,
+        "jpeg-85": 0.28817194500323073,
+        "resize-128": 0.0015031276203857024
+      },
+      "sha256": "88431cd9653ccd539741b555fb0a46b61558b301d4110412b5bc28b5e3ea6cb5"
+    },
+    {
+      "file": "camera.png",
+      "expected_ai": 0,
+      "scores": {
+        "original": 0.0009043093212366816,
+        "jpeg-85": 0.0006190363513331423,
+        "resize-128": 0.00011256432301216895
+      },
+      "sha256": "b0793d2adda0fa6ae899c03989482bff9a42d3d5690fc7e3648f2795d730c23a"
+    },
+    {
+      "file": "chelsea.png",
+      "expected_ai": 0,
+      "scores": {
+        "original": 0.0004348374926263487,
+        "jpeg-85": 0.029304023553119837,
+        "resize-128": 0.0003959258620358606
+      },
+      "sha256": "596aa1e7cb875eb79f437e310381d26b338a81c2da23439704a73c4651e8c4bb"
+    },
+    {
+      "file": "text2img-1.png",
+      "expected_ai": 1,
+      "scores": {
+        "original": 0.9999989776771931,
+        "jpeg-85": 0.9999974402073559,
+        "resize-128": 0.9904260387941062
+      },
+      "sha256": "254a5af2dfbf2174b275b069a2b6ec80a6c03099939dba4d1934c9408b829ce7"
+    },
+    {
+      "file": "sdxl-text2img.png",
+      "expected_ai": 1,
+      "scores": {
+        "original": 0.9999929955874696,
+        "jpeg-85": 0.9999858445634557,
+        "resize-128": 0.48895257976807593
+      },
+      "sha256": "e073c8191b03635372961f219ef5ca3ad7d60b65eb2a71a7dbd1a3a28f86b4fe"
+    },
+    {
+      "file": "text2img-vader.png",
+      "expected_ai": 1,
+      "scores": {
+        "original": 0.999984526651023,
+        "jpeg-85": 0.9999788740840138,
+        "resize-128": 0.9990445175462808
+      },
+      "sha256": "317a58632171f529ab2d17d1cbc39f7d02a628a7c96906b1564b7609330750cb"
+    }
+  ]
+}

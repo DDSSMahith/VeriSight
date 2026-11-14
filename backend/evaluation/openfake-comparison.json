@@ -1,0 +1,35 @@
+{
+  "model_id": "s-gehring/detectra-openfake",
+  "revision": "c84565e5bf8969d95908e12844f551e77ae87105",
+  "warning": "Noncommercial evaluation only; exploratory smoke test, not benchmark accuracy",
+  "rows": [
+    {
+      "file": "user-building.png",
+      "ai_score": 0.9213688988307976
+    },
+    {
+      "file": "astronaut.png",
+      "ai_score": 0.9845306602110941
+    },
+    {
+      "file": "camera.png",
+      "ai_score": 0.0002425006656198131
+    },
+    {
+      "file": "chelsea.png",
+      "ai_score": 0.004704046120991206
+    },
+    {
+      "file": "text2img-1.png",
+      "ai_score": 0.999991650776146
+    },
+    {
+      "file": "sdxl-text2img.png",
+      "ai_score": 0.9999984224821251
+    },
+    {
+      "file": "text2img-vader.png",
+      "ai_score": 0.999882332853211
+    }
+  ]
+}

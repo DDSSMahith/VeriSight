@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "verisight-api"
+version = "0.1.0"
+description = "Explainable deepfake detection and media verification API"
+requires-python = ">=3.11"
+dependencies = [
+  "fastapi>=0.115,<1",
+  "uvicorn[standard]>=0.30,<1",
+  "python-multipart>=0.0.12,<1",
+  "pillow>=11,<13",
+  "numpy>=2,<3",
+]
+
+[project.scripts]
+verisight = "app.cli:main"
+
+[project.optional-dependencies]
+ml = ["torch==2.15.0", "torchvision==0.29.2", "transformers==5.23.0", "sentence-transformers==6.3.0", "safetensors>=0.5,<1", "httpx>=0.27,<1"]
+dev = [
+  "httpx>=0.27,<1",
+  "pytest>=8,<9",
+  "ruff>=0.8,<1",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["app*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"

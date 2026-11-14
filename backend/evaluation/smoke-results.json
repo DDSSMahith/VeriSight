@@ -1,0 +1,372 @@
+{
+  "evaluated_at": "2026-11-14T08:23:27.108330+00:00",
+  "model_id": "Ateeqq/ai-vs-human-image-detector",
+  "revision": "60e82406916921b823616bee33397baab38af3f0",
+  "limitation": "Six public examples; unknown training overlap. Transformations are correlated. This is a smoke check, NOT deployment accuracy or calibration.",
+  "original_count": 6,
+  "original_correct_at_0_5": 6,
+  "original_false_positives": 0,
+  "original_false_negatives": 0,
+  "rows": [
+    {
+      "file": "astronaut.png",
+      "variant": "original",
+      "expected_ai": 0,
+      "source": "https://raw.githubusercontent.com/scikit-image/scikit-image/v0.24.0/skimage/data/astronaut.png",
+      "sha256": "88431cd9653ccd539741b555fb0a46b61558b301d4110412b5bc28b5e3ea6cb5",
+      "ai_score": 0.23601216077804565,
+      "verdict": "inconclusive",
+      "stability": "sensitive",
+      "check_scores": {
+        "original": 0.23601216077804565,
+        "jpeg-85": 0.9995551705360413,
+        "resize-128": 0.15635253489017487
+      }
+    },
+    {
+      "file": "astronaut.png",
+      "variant": "jpeg-85",
+      "expected_ai": 0,
+      "source": "https://raw.githubusercontent.com/scikit-image/scikit-image/v0.24.0/skimage/data/astronaut.png",
+      "sha256": "5307ee70b71e2b9592dcd1a527b39c4388b70615454a600dbac8bd967df18384",
+      "ai_score": 0.9995551705360413,
+      "verdict": "inconclusive",
+      "stability": "sensitive",
+      "check_scores": {
+        "original": 0.9995551705360413,
+        "jpeg-85": 0.9995774626731873,
+        "resize-128": 0.24569955468177795
+      }
+    },
+    {
+      "file": "astronaut.png",
+      "variant": "jpeg-50",
+      "expected_ai": 0,
+      "source": "https://raw.githubusercontent.com/scikit-image/scikit-image/v0.24.0/skimage/data/astronaut.png",
+      "sha256": "7bb53531c2000e6553107e66daceddd85dfe2e284567ce2218423dc290c33cd7",
+      "ai_score": 0.9995172023773193,
+      "verdict": "inconclusive",
+      "stability": "sensitive",
+      "check_scores": {
+        "original": 0.9995172023773193,
+        "jpeg-85": 0.9995189905166626,
+        "resize-128": 0.3419361412525177
+      }
+    },
+    {
+      "file": "astronaut.png",
+      "variant": "resize-128",
+      "expected_ai": 0,
+      "source": "https://raw.githubusercontent.com/scikit-image/scikit-image/v0.24.0/skimage/data/astronaut.png",
+      "sha256": "176ea2648936920c6770a1c38777140c327ba015bdcd2dd5e1d4ccc42f278b8d",
+      "ai_score": 0.15635251998901367,
+      "verdict": "low-risk",
+      "stability": "consistent",
+      "check_scores": {
+        "original": 0.15635251998901367,
+        "jpeg-85": 0.0030951225198805332,
+        "resize-128": 0.15635253489017487
+      }
+    },
+    {
+      "file": "camera.png",
+      "variant": "original",
+      "expected_ai": 0,
+      "source": "https://raw.githubusercontent.com/scikit-image/scikit-image/v0.24.0/skimage/data/camera.png",
+      "sha256": "b0793d2adda0fa6ae899c03989482bff9a42d3d5690fc7e3648f2795d730c23a",
+      "ai_score": 0.00027522112941369414,
+      "verdict": "low-risk",
+      "stability": "consistent",
+      "check_scores": {
+        "original": 0.00027522112941369414,
+        "jpeg-85": 0.00028755259700119495,
+        "resize-128": 0.0002436411305097863
+      }
+    },
+    {
+      "file": "camera.png",
+      "variant": "jpeg-85",
+      "expected_ai": 0,
+      "source": "https://raw.githubusercontent.com/scikit-image/scikit-image/v0.24.0/skimage/data/camera.png",
+      "sha256": "5b5dec6a2202389b11dff5ba89a86d5d659a529e5d97dd00e4b64f3c2396632e",
+      "ai_score": 0.00028755259700119495,
+      "verdict": "low-risk",
+      "stability": "consistent",
+      "check_scores": {
+        "original": 0.00028755259700119495,
+        "jpeg-85": 0.0002910607436206192,
+        "resize-128": 0.00025470752734690905
+      }
+    },
+    {
+      "file": "camera.png",
+      "variant": "jpeg-50",
+      "expected_ai": 0,
+      "source": "https://raw.githubusercontent.com/scikit-image/scikit-image/v0.24.0/skimage/data/camera.png",
+      "sha256": "3016235ef4b9bbb8939279aa38cb45244dc8b62565efba9daacd5e4e74072547",
+      "ai_score": 0.00034588409471325576,
+      "verdict": "low-risk",
+      "stability": "consistent",
+      "check_scores": {
+        "original": 0.00034588409471325576,
+        "jpeg-85": 0.000360460631782189,
+        "resize-128": 0.0002695521106943488
+      }
+    },
+    {
+      "file": "camera.png",
+      "variant": "resize-128",
+      "expected_ai": 0,
+      "source": "https://raw.githubusercontent.com/scikit-image/scikit-image/v0.24.0/skimage/data/camera.png",
+      "sha256": "b09c3fa1238f6e2e88a4fef298879c61862f37e21a719b68ac7f651ecf4a8aee",
+      "ai_score": 0.0002436411305097863,
+      "verdict": "low-risk",
+      "stability": "consistent",
+      "check_scores": {
+        "original": 0.0002436411305097863,
+        "jpeg-85": 0.0001394745340803638,
+        "resize-128": 0.0002436411305097863
+      }
+    },
+    {
+      "file": "chelsea.png",
+      "variant": "original",
+      "expected_ai": 0,
+      "source": "https://raw.githubusercontent.com/scikit-image/scikit-image/v0.24.0/skimage/data/chelsea.png",
+      "sha256": "596aa1e7cb875eb79f437e310381d26b338a81c2da23439704a73c4651e8c4bb",
+      "ai_score": 0.0002379794605076313,
+      "verdict": "low-risk",
+      "stability": "consistent",
+      "check_scores": {
+        "original": 0.0002379794605076313,
+        "jpeg-85": 0.001167007489129901,
+        "resize-128": 0.0006290840683504939
+      }
+    },
+    {
+      "file": "chelsea.png",
+      "variant": "jpeg-85",
+      "expected_ai": 0,
+      "source": "https://raw.githubusercontent.com/scikit-image/scikit-image/v0.24.0/skimage/data/chelsea.png",
+      "sha256": "e95375848355145da6ca546de9ac64af9f2eeece928ec408b7a53c7c5251ddbe",
+      "ai_score": 0.001167007489129901,
+      "verdict": "low-risk",
+      "stability": "consistent",
+      "check_scores": {
+        "original": 0.001167007489129901,
+        "jpeg-85": 0.0011860625818371773,
+        "resize-128": 0.0007684946176595986
+      }
+    },
+    {
+      "file": "chelsea.png",
+      "variant": "jpeg-50",
+      "expected_ai": 0,
+      "source": "https://raw.githubusercontent.com/scikit-image/scikit-image/v0.24.0/skimage/data/chelsea.png",
+      "sha256": "984b725a1d6a51e5d45b010eb218bcaeb8b97956daacf294e28ac8e61050f506",
+      "ai_score": 0.0010807475773617625,
+      "verdict": "low-risk",
+      "stability": "consistent",
+      "check_scores": {
+        "original": 0.0010807475773617625,
+        "jpeg-85": 0.0010616290383040905,
+        "resize-128": 0.0007951262523420155
+      }
+    },
+    {
+      "file": "chelsea.png",
+      "variant": "resize-128",
+      "expected_ai": 0,
+      "source": "https://raw.githubusercontent.com/scikit-image/scikit-image/v0.24.0/skimage/data/chelsea.png",
+      "sha256": "3e976021905aed40ec365dbe0b4578b5cfc427ca76c5a5228d2a3c9e0f7f9151",
+      "ai_score": 0.000629084708634764,
+      "verdict": "low-risk",
+      "stability": "consistent",
+      "check_scores": {
+        "original": 0.000629084708634764,
+        "jpeg-85": 0.0007350168307311833,
+        "resize-128": 0.0006290840683504939
+      }
+    },
+    {
+      "file": "text2img-1.png",
+      "variant": "original",
+      "expected_ai": 1,
+      "source": "https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/diffusers/text2img-1.png",
+      "sha256": "254a5af2dfbf2174b275b069a2b6ec80a6c03099939dba4d1934c9408b829ce7",
+      "ai_score": 0.9999963045120239,
+      "verdict": "suspicious",
+      "stability": "consistent",
+      "check_scores": {
+        "original": 0.9999963045120239,
+        "jpeg-85": 0.9999971389770508,
+        "resize-128": 0.999987006187439
+      }
+    },
+    {
+      "file": "text2img-1.png",
+      "variant": "jpeg-85",
+      "expected_ai": 1,
+      "source": "https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/diffusers/text2img-1.png",
+      "sha256": "50e504cb8b75502c448e9c4b125acc41a6491e03c412721f00c259c62bf23cf7",
+      "ai_score": 0.9999971389770508,
+      "verdict": "suspicious",
+      "stability": "consistent",
+      "check_scores": {
+        "original": 0.9999971389770508,
+        "jpeg-85": 0.9999971389770508,
+        "resize-128": 0.9999872446060181
+      }
+    },
+    {
+      "file": "text2img-1.png",
+      "variant": "jpeg-50",
+      "expected_ai": 1,
+      "source": "https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/diffusers/text2img-1.png",
+      "sha256": "acbc36eeb1834f85465ce270c509b3bf6efd24076720372fbf8a24d060000d5e",
+      "ai_score": 0.999996542930603,
+      "verdict": "suspicious",
+      "stability": "consistent",
+      "check_scores": {
+        "original": 0.999996542930603,
+        "jpeg-85": 0.9999966621398926,
+        "resize-128": 0.9999852180480957
+      }
+    },
+    {
+      "file": "text2img-1.png",
+      "variant": "resize-128",
+      "expected_ai": 1,
+      "source": "https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/diffusers/text2img-1.png",
+      "sha256": "cb4b73673ffa3c72553517bcea661396c7981aff6e9de96e01346ac1b547efcf",
+      "ai_score": 0.999987006187439,
+      "verdict": "suspicious",
+      "stability": "consistent",
+      "check_scores": {
+        "original": 0.999987006187439,
+        "jpeg-85": 0.9997346997261047,
+        "resize-128": 0.999987006187439
+      }
+    },
+    {
+      "file": "sdxl-text2img.png",
+      "variant": "original",
+      "expected_ai": 1,
+      "source": "https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/diffusers/sdxl-text2img.png",
+      "sha256": "e073c8191b03635372961f219ef5ca3ad7d60b65eb2a71a7dbd1a3a28f86b4fe",
+      "ai_score": 0.999995231628418,
+      "verdict": "suspicious",
+      "stability": "consistent",
+      "check_scores": {
+        "original": 0.999995231628418,
+        "jpeg-85": 0.9999949932098389,
+        "resize-128": 0.9999580383300781
+      }
+    },
+    {
+      "file": "sdxl-text2img.png",
+      "variant": "jpeg-85",
+      "expected_ai": 1,
+      "source": "https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/diffusers/sdxl-text2img.png",
+      "sha256": "a5971a17c98f0098f17f1c5d783104929192817c008c29cbbee93e040b6a5fd4",
+      "ai_score": 0.9999949932098389,
+      "verdict": "suspicious",
+      "stability": "consistent",
+      "check_scores": {
+        "original": 0.9999949932098389,
+        "jpeg-85": 0.9999949932098389,
+        "resize-128": 0.999954104423523
+      }
+    },
+    {
+      "file": "sdxl-text2img.png",
+      "variant": "jpeg-50",
+      "expected_ai": 1,
+      "source": "https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/diffusers/sdxl-text2img.png",
+      "sha256": "82d71cea76c4e867b2212ac86862a061366c7670c44154eca6104728f142719b",
+      "ai_score": 0.9999935626983643,
+      "verdict": "suspicious",
+      "stability": "consistent",
+      "check_scores": {
+        "original": 0.9999935626983643,
+        "jpeg-85": 0.9999935626983643,
+        "resize-128": 0.9999370574951172
+      }
+    },
+    {
+      "file": "sdxl-text2img.png",
+      "variant": "resize-128",
+      "expected_ai": 1,
+      "source": "https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/diffusers/sdxl-text2img.png",
+      "sha256": "429e7aac59515145916610fe03ce8dd7fcc08435aa896a5bd0f446d320b77646",
+      "ai_score": 0.9999580383300781,
+      "verdict": "suspicious",
+      "stability": "consistent",
+      "check_scores": {
+        "original": 0.9999580383300781,
+        "jpeg-85": 0.8949010968208313,
+        "resize-128": 0.9999580383300781
+      }
+    },
+    {
+      "file": "text2img-vader.png",
+      "variant": "original",
+      "expected_ai": 1,
+      "source": "https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/diffusers/text2img-vader.png",
+      "sha256": "317a58632171f529ab2d17d1cbc39f7d02a628a7c96906b1564b7609330750cb",
+      "ai_score": 0.9998906850814819,
+      "verdict": "suspicious",
+      "stability": "consistent",
+      "check_scores": {
+        "original": 0.9998906850814819,
+        "jpeg-85": 0.9998996257781982,
+        "resize-128": 0.9998687505722046
+      }
+    },
+    {
+      "file": "text2img-vader.png",
+      "variant": "jpeg-85",
+      "expected_ai": 1,
+      "source": "https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/diffusers/text2img-vader.png",
+      "sha256": "364de4471b8d5363cc299f80a923bfc34abaf70051c6daac87ecb0b3463116df",
+      "ai_score": 0.9998996257781982,
+      "verdict": "suspicious",
+      "stability": "consistent",
+      "check_scores": {
+        "original": 0.9998996257781982,
+        "jpeg-85": 0.9999035596847534,
+        "resize-128": 0.9998663663864136
+      }
+    },
+    {
+      "file": "text2img-vader.png",
+      "variant": "jpeg-50",
+      "expected_ai": 1,
+      "source": "https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/diffusers/text2img-vader.png",
+      "sha256": "0174abd77694cfd16d3c4acfea88de748be60e48a11cb3ef90fdf74628d5e6d0",
+      "ai_score": 0.9998996257781982,
+      "verdict": "suspicious",
+      "stability": "consistent",
+      "check_scores": {
+        "original": 0.9998996257781982,
+        "jpeg-85": 0.9999051094055176,
+        "resize-128": 0.9998605251312256
+      }
+    },
+    {
+      "file": "text2img-vader.png",
+      "variant": "resize-128",
+      "expected_ai": 1,
+      "source": "https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/diffusers/text2img-vader.png",
+      "sha256": "06f93a53d007422305f33472f42011c24c5e651d2a7a05437551c6ebe79d5958",
+      "ai_score": 0.9998687505722046,
+      "verdict": "suspicious",
+      "stability": "consistent",
+      "check_scores": {
+        "original": 0.9998687505722046,
+        "jpeg-85": 0.9997251629829407,
+        "resize-128": 0.9998687505722046
+      }
+    }
+  ]
+}
