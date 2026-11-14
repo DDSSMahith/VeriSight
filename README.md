@@ -2,50 +2,43 @@
 
 VeriSight runs an experimental AI-image classifier locally and shows basic file checks separately. It does **not** yet detect face swaps, localized edits, video deepfakes, or cloned voices.
 
-## Deploy the frontend on Vercel
+## Deploy on Vercel
 
-Import `DDSSMahith/Verisight` into Vercel with these settings:
+The root `vercel.json` defines two services under one domain:
 
-| Setting | Value |
-| --- | --- |
-| Root Directory | `frontend` |
-| Framework | Vite |
-| Install Command | `npm ci` |
-| Build Command | `npm run build` |
-| Output Directory | `dist` |
-| Environment variable | `VITE_API_BASE_URL=https://your-backend.example.com` |
+| Service | Public path | Runtime |
+| --- | --- | --- |
+| `frontend` | `/*` | Vite static site |
+| `backend` | `/api/*` | Vercel container |
 
-The API address must be the HTTPS origin of your separately hosted backend,
-without `/api/v1` or `/docs`. The address is public, not a secret. Set it for each
-Vercel environment you use and redeploy after changing it. The tab uses the
-VeriSight title and a compact V/S favicon matching the website's wordmark.
+There are no service bindings because the browser calls the public `/api` route;
+neither service makes a private server-side call to the other. Set the Vercel
+project's Root Directory to `./` so it reads the root configuration. Do not set
+`VITE_API_BASE_URL` for this same-domain deployment.
 
-This deploys the website only. Detection needs the Python service and downloaded
-Smaug weights on a persistent server/container. Install `backend/.[ml]`, run
-`python -m app.setup_model` from `backend`, then serve with
-`uvicorn app.main:app --host 0.0.0.0 --port 8000` behind your host's HTTPS endpoint.
-The existing backend Dockerfile can also be used with the model directory mounted
-at `/app/models` read-only. Download the model before starting the container.
+The Vercel container downloads a checksum-pinned Q8_0 release of the official Smaug
+GGUF detector at build time and runs it with a pinned llama.cpp CPU runtime. The
+original image and a JPEG copy each receive the publisher's full three-crop score.
+The 128-pixel re-check is omitted in the compact runtime to stay within Hobby's
+five-minute request limit. Local development keeps the float32 PyTorch runtime and
+all three re-check versions.
 
-Set `VERISIGHT_ALLOWED_ORIGINS=https://your-project.vercel.app` in the backend
-host's environment. Use comma-separated exact origins for a custom domain or
-specific preview deployments. The backend does not automatically load `.env` files.
-Check `/api/v1/health` returns `neural_detector: ready` before testing uploads.
-Local development continues to use the Vite proxy without any environment changes.
+Online uploads are capped at 4 MB to leave room below Vercel Functions' 4.5 MB
+request-body limit. The Hobby plan has a five-minute maximum duration and 2 GB of
+memory. The compact model used about 575 MiB peak working set in a one-image local
+Windows test, but that is not a Vercel capacity guarantee. See
+[Vercel function limits](https://vercel.com/docs/functions/limitations) and
+[container runtime documentation](https://vercel.com/docs/functions/runtimes/container).
 
-Uploads go directly from the browser to the backend. The current model weights
-alone are about 0.9 GB, and the application accepts files up to 100 MB; standard
-Vercel Python Functions have a 500 MB bundle limit and Functions have a 4.5 MB
-request-body limit. See [Vercel function limits](https://vercel.com/docs/functions/limitations)
-and [Vite deployment documentation](https://vercel.com/docs/frameworks/frontend/vite).
-This repository does not deploy the detector as a Vercel Function. Allow long
-analysis requests at the backend host/proxy, provision enough memory for float32
-model inference, and add authentication/rate limits before opening the expensive
-inference endpoint to unrestricted public traffic. CORS is not authentication.
+The first deployment downloads roughly 560 MB of pinned model/runtime artifacts
+and may take several minutes. After deployment, `/api/v1/health` must report
+`neural_detector: ready`. Idle production containers scale down, so the first
+request after a quiet period can take longer. Add authentication and rate limits
+before exposing CPU-intensive inference to unrestricted public traffic.
 
 Model weights, virtual environments, local sample uploads, screenshots, environment
-files, dependencies, and build output are excluded from Git. New clones must run
-the installation steps below; the repository does not contain the model itself.
+files, dependencies, and build output are excluded from Git. The container fetches
+the compact model during its build; local clones use `setup-model.cmd` for PyTorch.
 
 ## Run
 
@@ -92,7 +85,7 @@ npm install
 - The page separately describes which class the model favored on the original image and each re-check. A raw AI-class output above 0.5 favors AI-generated; below 0.5 favors human-made; exactly 0.5 is a tie. These are descriptions of classifier output, not authenticity verdicts or confidence levels. Any class disagreement is shown, even if the score spread is below the provisional instability threshold.
 - Failed, unavailable, and unsupported detection returns `ai_score: null` and no risk score. There is no fallback 8%.
 - File metadata and texture heuristics do not change the model score.
-- Each image is also re-checked after JPEG compression and resizing to 128 × 128. A class disagreement or score spread of 0.60 or more triggers a sensitivity warning. The original score is retained, not averaged with degraded copies. This provisional stability check does not catch all errors; consistent scores can also be wrong.
+- Each image is also re-checked after JPEG compression. The local PyTorch runtime adds a 128 × 128 resizing check; the compact Vercel runtime omits that slow third version. A class disagreement or score spread of 0.60 or more triggers a sensitivity warning. The original score is retained, not averaged with degraded copies. This provisional stability check does not catch all errors; consistent scores can also be wrong.
 - Video, audio, animated images, and images smaller than 64 pixels per side receive no AI score.
 - Results explain measured re-check scores, instability, and missing coverage. A classifier score cannot identify an eye, skin, lighting, or face-swap defect. No such visual explanation is fabricated. The list counts all displayed checks, including informational findings and unavailable capabilities.
 - The application does not archive uploads. Multipart handling can use temporary OS files for large uploads, which are closed after reading.
@@ -151,6 +144,6 @@ Frontend build: `cd frontend` then `npm run build`.
 
 - `GET /api/v1/health`: service and model readiness.
 - `POST /api/v1/analyze`: multipart `file`; result includes model ID, revision, raw score, status, limitations, and file findings.
-- API docs: http://localhost:8000/docs.
+- API docs: http://localhost:8000/api/docs.
 
 The optional Docker deployment serves the UI at http://localhost:8080. Run local model setup first; Compose mounts those model files read-only. No model is downloaded during container startup.

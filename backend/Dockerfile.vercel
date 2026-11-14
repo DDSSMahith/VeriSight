@@ -1,0 +1,62 @@
+FROM ubuntu:24.04
+
+ARG LLAMA_TAG=b12359
+ARG LLAMA_SHA256=0bc1f091e8916102b6d8f2cf944233a620e90a0f856c72d0ce41150c65c2e72e
+ARG MODEL_REVISION=cfb5e8649729d05a710c67ac8f4a0c2bf44b5824
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PORT=3000 \
+    VERISIGHT_DETECTOR_RUNTIME=gguf \
+    VERISIGHT_LLAMA_SERVER=/opt/llama/llama-server \
+    VERISIGHT_MODEL_THREADS=1 \
+    LD_LIBRARY_PATH=/opt/llama
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends ca-certificates curl libgomp1 passwd python3 python3-pip \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+COPY pyproject.toml ./
+COPY app ./app
+COPY licenses ./licenses
+RUN python3 -m pip install --break-system-packages --no-cache-dir .
+
+RUN mkdir -p /opt/llama \
+    && curl --fail --location --retry 3 \
+      "https://github.com/ggml-org/llama.cpp/releases/download/${LLAMA_TAG}/llama-${LLAMA_TAG}-bin-ubuntu-x64.tar.gz" \
+      --output /tmp/llama.tar.gz \
+    && printf '%s  %s\n' "${LLAMA_SHA256}" /tmp/llama.tar.gz | sha256sum --check --strict \
+    && tar --extract --gzip --file /tmp/llama.tar.gz --directory /opt/llama --strip-components=1 \
+    && rm /tmp/llama.tar.gz \
+    && test -x /opt/llama/llama-server
+
+RUN mkdir -p /app/models/smaug-gguf \
+    && curl --fail --location --retry 3 \
+      "https://huggingface.co/abacusai/Smaug-AI-Image-Detector-GGUF/resolve/${MODEL_REVISION}/Smaug-AI-Image-Detector-Q8_0.gguf" \
+      --output /app/models/smaug-gguf/Smaug-AI-Image-Detector-Q8_0.gguf \
+    && curl --fail --location --retry 3 \
+      "https://huggingface.co/abacusai/Smaug-AI-Image-Detector-GGUF/resolve/${MODEL_REVISION}/mmproj-Smaug-AI-Image-Detector-Q8_0.gguf" \
+      --output /app/models/smaug-gguf/mmproj-Smaug-AI-Image-Detector-Q8_0.gguf \
+    && curl --fail --location --retry 3 \
+      "https://huggingface.co/abacusai/Smaug-AI-Image-Detector-GGUF/resolve/${MODEL_REVISION}/head.json" \
+      --output /app/models/smaug-gguf/head.json \
+    && curl --fail --location --retry 3 \
+      "https://huggingface.co/abacusai/Smaug-AI-Image-Detector-GGUF/resolve/${MODEL_REVISION}/LICENSE" \
+      --output /app/models/smaug-gguf/LICENSE \
+    && printf '%s  %s\n' \
+      77fa0d416344f0e06ac6b7ad9ad31ff108f5fdf5855194cfd73cb109699a20f7 /app/models/smaug-gguf/Smaug-AI-Image-Detector-Q8_0.gguf \
+      7474c62697b316c9d8a00db8c60116b664c5c8ee5e190097b8fea54be8cf1f30 /app/models/smaug-gguf/mmproj-Smaug-AI-Image-Detector-Q8_0.gguf \
+      10c6764cb04b3de76430c23870e87abc431debdad86515a1aeec3ba54d8e5d5c /app/models/smaug-gguf/head.json \
+      cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30 /app/models/smaug-gguf/LICENSE \
+      | sha256sum --check --strict \
+    && printf '%s\n' "${MODEL_REVISION}" > /app/models/smaug-gguf/revision.txt
+
+RUN useradd --create-home --uid 10001 verisight \
+    && chown -R verisight:verisight /app
+USER 10001
+
+EXPOSE 3000
+CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-3000} --no-server-header"]

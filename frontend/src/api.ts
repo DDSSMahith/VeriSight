@@ -2,7 +2,7 @@ import type { AnalysisReport } from "./types";
 
 export const API_BASE_URL = (import.meta.env?.VITE_API_BASE_URL ?? "").trim().replace(/\/+$/, "");
 const hosted = import.meta.env?.PROD === true;
-export const API_DOCS_URL = `${API_BASE_URL || (hosted ? "" : "http://127.0.0.1:8000")}/docs`;
+export const API_DOCS_URL = `${API_BASE_URL || (hosted ? "" : "http://127.0.0.1:8000")}/api/docs`;
 
 export function apiUrl(path: string, base = API_BASE_URL): string {
   return `${base.trim().replace(/\/+$/, "")}${path}`;
@@ -66,7 +66,7 @@ export async function analyzeMedia(file: File): Promise<AnalysisReport> {
   await checkBackend();
   const data = new FormData();
   data.append("file", file);
-  const report = await apiRequest("/api/v1/analyze", { method: "POST", body: data }, 240000) as AnalysisReport;
+  const report = await apiRequest("/api/v1/analyze", { method: "POST", body: data }, 290000) as AnalysisReport;
   if (!report?.detection) {
     throw new ApiError(hosted ? "The analysis service needs an update before it can check images." : "An older backend is still running. Stop it with Ctrl+C, then run npm run dev from the backend folder and retry.", 409);
   }

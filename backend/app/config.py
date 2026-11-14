@@ -22,7 +22,8 @@ def allowed_origins() -> tuple[str, ...]:
 class Settings:
     app_name: str = "VeriSight API"
     version: str = "0.1.0"
-    max_upload_bytes: int = 100 * 1024 * 1024
+    # Leaves headroom below Vercel Functions' 4.5 MB request-body limit.
+    max_upload_bytes: int = 4 * 1024 * 1024
     allowed_origins: tuple[str, ...] = field(default_factory=allowed_origins)
 
 

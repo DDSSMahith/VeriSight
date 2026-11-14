@@ -1,0 +1,26 @@
+{
+  "purpose": "Check whether the compact runtime is a candidate for free Vercel hosting",
+  "model_id": "abacusai/Smaug-AI-Image-Detector-GGUF",
+  "revision": "cfb5e8649729d05a710c67ac8f4a0c2bf44b5824",
+  "runtime": "llama.cpp b12359, Q8_0 encoder and projector",
+  "environment": "Local Windows, CPU inference, one thread, one slot, context size 512",
+  "sample": "user-building.png",
+  "sha256": "f7f8ff8dbf1d17cee7fa0058401186d3af811fbf59eb4da4ab91bcabc13fa0bc",
+  "expected_ai": 1,
+  "label_source": "User reported",
+  "completed_checks": {
+    "original": {"ai_score": 0.9560456133863586, "seconds": 89.33},
+    "jpeg-85": {"ai_score": 0.8938526777378073, "seconds": 90.33}
+  },
+  "observed_memory": {
+    "model_process_peak_working_set_mib_at_sample": 574.7,
+    "model_process_private_memory_mib_at_sample": 687.3,
+    "note": "Windows process snapshot, not a Linux container limit test. Excludes Python API/client memory."
+  },
+  "limitations": [
+    "The comparison was stopped after the original and JPEG checks; downsizing and other controls were not completed.",
+    "No deployment or inference on Vercel was performed.",
+    "This single-image check does not establish accuracy, full-runtime memory consumption, or free-plan capacity.",
+    "The compact runtime is configured for the proposed Vercel deployment but has not been verified on Vercel."
+  ]
+}

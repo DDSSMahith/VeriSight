@@ -28,6 +28,11 @@ def test_health_endpoint_reports_detector_coverage() -> None:
     assert response.json()["neural_detector"] == "unavailable"
 
 
+def test_api_documentation_uses_the_public_api_prefix() -> None:
+    assert client.get("/api/docs").status_code == 200
+    assert client.get("/api/openapi.json").status_code == 200
+
+
 def test_analysis_endpoint_returns_explainable_report() -> None:
     response = client.post("/api/v1/analyze", files={"file": image_upload()})
     assert response.status_code == 200

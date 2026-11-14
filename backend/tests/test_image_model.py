@@ -45,6 +45,24 @@ def test_inference_failure_does_not_return_a_fallback_score():
     assert result.check_scores == {}
 
 
+def test_compact_runtime_skips_the_slowest_recheck_but_preserves_original():
+    class Runtime:
+        def __init__(self):
+            self.scores = iter([0.956, 0.894])
+
+        def predict(self, image):
+            return next(self.scores), [0.99, 0.02, 0.98]
+
+    detector = image_model.ImageDetector(runtime_name="gguf")
+    detector.model = Runtime()
+    result = detector.analyze(image_bytes(), "image")
+    assert result.status == "complete"
+    assert result.ai_score == 0.956
+    assert result.check_scores == {"original": 0.956, "jpeg-85": 0.894}
+    assert result.model_id == "abacusai/Smaug-AI-Image-Detector-GGUF"
+    assert "resize-128" not in result.check_scores
+
+
 def test_tampered_bundle_never_instantiates_runtime(tmp_path, monkeypatch):
     (tmp_path / "revision.txt").write_text(image_model.REVISION)
     (tmp_path / "weights").write_bytes(b"tampered")

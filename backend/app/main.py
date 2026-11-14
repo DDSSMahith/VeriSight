@@ -18,7 +18,10 @@ analysis_service = AnalysisService()
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await run_in_threadpool(analysis_service.detector.load)
-    yield
+    try:
+        yield
+    finally:
+        await run_in_threadpool(analysis_service.detector.close)
 
 
 app = FastAPI(
@@ -26,6 +29,8 @@ app = FastAPI(
     title=settings.app_name,
     version=settings.version,
     description="Explainable media verification and deepfake-triage API",
+    docs_url="/api/docs",
+    openapi_url="/api/openapi.json",
 )
 app.add_middleware(
     CORSMiddleware,

@@ -3,6 +3,7 @@
 import hashlib
 import io
 import logging
+import os
 import threading
 from pathlib import Path
 
@@ -12,13 +13,18 @@ from app.detectors.model_manifest import FILES, MODEL_ID, REVISION
 from app.detectors.smaug_runtime import SmaugRuntime
 from app.schemas import DetectionResult
 
-MODEL_DIR = Path(__file__).resolve().parents[2] / "models" / "smaug"
+MODEL_ROOT = Path(__file__).resolve().parents[2] / "models"
+MODEL_DIR = MODEL_ROOT / "smaug"
 logger = logging.getLogger(__name__)
 
 
 class ImageDetector:
-    def __init__(self, model_dir: Path = MODEL_DIR):
-        self.model_dir = model_dir
+    def __init__(self, model_dir: Path | None = None, runtime_name: str | None = None):
+        self.runtime_name = runtime_name or os.environ.get("VERISIGHT_DETECTOR_RUNTIME", "torch")
+        if self.runtime_name not in {"torch", "gguf"}:
+            raise ValueError("VERISIGHT_DETECTOR_RUNTIME must be 'torch' or 'gguf'")
+        default_dir = MODEL_ROOT / ("smaug-gguf" if self.runtime_name == "gguf" else "smaug")
+        self.model_dir = model_dir or default_dir
         self.model = None
         self.lock = threading.Lock()
         self.message = (
@@ -31,22 +37,46 @@ class ImageDetector:
 
     def load(self) -> None:
         try:
-            import torch
-            if (self.model_dir / "revision.txt").read_text().strip() != REVISION:
+            files, revision = FILES, REVISION
+            if self.runtime_name == "gguf":
+                from app.detectors.gguf_manifest import FILES as files
+                from app.detectors.gguf_manifest import REVISION as revision
+            if (self.model_dir / "revision.txt").read_text().strip() != revision:
                 raise ValueError("Model revision does not match the pinned version")
-            for name, expected in FILES.items():
+            for name, expected in files.items():
                 with (self.model_dir / name).open("rb") as source:
                     if hashlib.file_digest(source, "sha256").hexdigest() != expected:
                         raise ValueError(f"Model checksum mismatch: {name}")
-            torch.set_num_threads(4)
-            self.model = SmaugRuntime(self.model_dir)
-            self.message = "Smaug image detector ready on CPU. Scores are not calibrated."
+            if self.runtime_name == "gguf":
+                from app.detectors.smaug_gguf_runtime import SmaugGGUFRuntime
+
+                self.model = SmaugGGUFRuntime(self.model_dir)
+                self.message = "Compact Smaug image detector ready on CPU. Scores are not calibrated."
+            else:
+                import torch
+
+                torch.set_num_threads(4)
+                self.model = SmaugRuntime(self.model_dir)
+                self.message = "Smaug image detector ready on CPU. Scores are not calibrated."
         except Exception:
             logger.exception("Image detector could not load")
             self.model = None
             self.message = (
                 "Image detector unavailable. Run setup-model.cmd and restart the backend."
             )
+
+    def close(self) -> None:
+        if self.model is not None and hasattr(self.model, "close"):
+            self.model.close()
+
+    @property
+    def model_identity(self) -> tuple[str, str]:
+        if self.runtime_name == "gguf":
+            from app.detectors.gguf_manifest import MODEL_ID as model_id
+            from app.detectors.gguf_manifest import REVISION as revision
+
+            return model_id, revision
+        return MODEL_ID, REVISION
 
     def analyze(self, content: bytes, media_kind: str) -> DetectionResult:
         if media_kind != "image":
@@ -72,19 +102,24 @@ class ImageDetector:
             jpeg = io.BytesIO()
             image.save(jpeg, format="JPEG", quality=85)
             with Image.open(io.BytesIO(jpeg.getvalue())) as compressed:
-                variants = [image, compressed.convert("RGB"), image.resize((128, 128))]
+                variants = [image, compressed.convert("RGB")]
+                names = ["original", "jpeg-85"]
+                if self.runtime_name != "gguf":
+                    variants.append(image.resize((128, 128)))
+                    names.append("resize-128")
             with self.lock:
                 outputs = [self.model.predict(variant) for variant in variants]
                 scores = [output[0] for output in outputs]
             preferences = {(score > 0.5) - (score < 0.5) for score in scores}
             sensitive = max(scores) - min(scores) >= 0.6 or len(preferences) > 1
+            model_id, revision = self.model_identity
             return DetectionResult(
                 status="complete",
-                model_id=MODEL_ID,
-                revision=REVISION,
+                model_id=model_id,
+                revision=revision,
                 ai_score=scores[0],
                 stability="sensitive" if sensitive else "consistent",
-                check_scores=dict(zip(("original", "jpeg-85", "resize-128"), scores, strict=True)),
+                check_scores=dict(zip(names, scores, strict=True)),
                 crop_scores=outputs[0][1],
                 method="Three 528-pixel crops per version; average crop logits, then sigmoid.",
                 message=(
@@ -95,9 +130,10 @@ class ImageDetector:
             )
         except Exception:
             logger.exception("Image inference failed")
+            model_id, revision = self.model_identity
             return DetectionResult(
                 status="failed",
-                model_id=MODEL_ID,
-                revision=REVISION,
+                model_id=model_id,
+                revision=revision,
                 message="The image detector couldn't finish. No AI score was produced.",
             )

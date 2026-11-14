@@ -239,7 +239,7 @@ function UploadPanel({ stage, file, elapsed, error, onFile, onClear }: UploadPan
             <span className="upload-icon"><UploadCloud size={30} strokeWidth={1.5} /></span>
             <h3>Drop a file.<br />Let’s take a look.</h3>
             <p>Drop a file here or <span>select from device →</span></p>
-            <small>UP TO 100 MB · YOUR FILE ISN’T KEPT AFTER THE CHECK</small>
+            <small>UP TO 4 MB · YOUR FILE ISN’T KEPT AFTER THE CHECK</small>
             <div className="media-pills">
               <span><FileImage size={13} /> JPG / PNG / WEBP</span>
               <span><Video size={13} /> MP4 / MOV / WEBM</span>
@@ -441,8 +441,8 @@ export default function App() {
   }, [stage]);
 
   const handleFile = async (candidate: File) => {
-    if (candidate.size > 100 * 1024 * 1024) {
-      setError("That file is larger than the 100 MB analysis limit.");
+    if (candidate.size > 4 * 1024 * 1024) {
+      setError("That file is larger than the 4 MB online analysis limit.");
       setStage("error");
       return;
     }
